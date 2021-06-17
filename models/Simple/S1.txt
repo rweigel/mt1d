@@ -1,0 +1,2 @@
+% Resistivity [ohm.m] layer thickness [m]
+1 Inf

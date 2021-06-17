@@ -1,0 +1,15 @@
+% Resistivity [ohm.m] layer thickness [m] minimum resistivity [ohm.m] maximum resistivity [ohm.m]
+10 100 NaN NaN
+15 500 NaN NaN
+1.7 1000 NaN NaN
+20 900 NaN NaN
+2800 16500 1000 4500
+40 9000 3.5 40
+265 19000 265 2000
+500 53000 40 1000
+210 150000 2 210
+50 160000 NaN NaN
+20 110000 NaN NaN
+5.6 150000 NaN NaN
+1.58 230000 NaN NaN
+0.89 100000 NaN NaN

@@ -1,0 +1,5 @@
+% Resistivity [ohm.m] layer thickness [m]
+40000  30000 
+ 4000  15000 
+  700 365000
+    1    Inf
