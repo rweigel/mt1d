@@ -1,6 +1,6 @@
 clear;
 
-saveimg = false;
+saveimg = true;
 
 addpath([fileparts(mfilename('fullpath')),pathsep(),'m']);
 addpath([fileparts(mfilename('fullpath')),pathsep(),'models']);
@@ -13,11 +13,9 @@ for i = 2:length(models)
     fnamebase = [fnamebase,'_',models{i}];
 end
 fname{1} = sprintf('z_planewave_model_compare_Z_vs_T_%s',fnamebase);
-fname{2} = sprintf('z_planewave_model_compare_Z_vs_f_%s',fnamebase);
-fname{3} = sprintf('z_planewave_model_compare_phi_vs_T_%s',fnamebase);
-fname{4} = sprintf('z_planewave_model_compare_phi_vs_f_%s',fnamebase);
-fname{5} = sprintf('z_planewave_model_compare_depth_vs_rho_%s',fnamebase);
-fname{6} = sprintf('z_planewave_model_compare_irf_%s',fnamebase);
+fname{2} = sprintf('z_planewave_model_compare_phi_vs_T_%s',fnamebase);
+fname{3} = sprintf('z_planewave_model_compare_depth_vs_rho_%s',fnamebase);
+fname{4} = sprintf('z_planewave_model_compare_irf_%s',fnamebase);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -122,20 +120,13 @@ for i = 1:length(models)
             yl = get(gca,'YLim');
             xl = get(gca,'XLim');
             text(xl(1),yl(2),...
-             ' $|\widetilde{Z}|$ [V/m/T]','Interpreter','Latex',...
+             ' $|\widetilde{Z}| \;\left[\frac{\mbox{mV/km}}{\mbox{nT}}\right]$','Interpreter','Latex',...
              'VerticalAlignment','bottom');
         end
         ylabel('$|\widetilde{Z}|$ [V/m/T]','Interpreter','Latex');
         set(gca,'XLim',[min(1./f),max(1./f)])
 
     figurex(3);
-        loglog(f,Zmag{i},'LineWidth',2);
-        hold on;grid on;
-        set(gca,'XLim',[min(f),max(f)])
-        xlabel('Frequency [Hz]');
-        ylabel('$|\widetilde{Z}|$ [V/m/T]','Interpreter','Latex');
-
-    figurex(4);
         semilogx(1./f,phi_Z{i},'LineWidth',2);
         hold on;grid on;
         ylabel(' $\phi_{|\widetilde{Z}|}$ [deg]','Interpreter','Latex');
@@ -143,17 +134,8 @@ for i = 1:length(models)
         set(gca,'YTick',[-90:15:90]);
         xlabel('Period [s]');
         set(gca,'XLim',[min(1./f),max(1./f)])	
-	
-    figurex(5);
-        semilogx(f,phi_Z{i},'LineWidth',2);
-        hold on;grid on;
-        ylabel(' $\phi_{|\widetilde{Z}|}$ [deg]','Interpreter','Latex');
-        set(gca,'YLim',[-90,90]);
-        set(gca,'YTick',[-90:15:90]);
-        xlabel('Frequency [1/s]');
-        set(gca,'XLim',[min(f),max(f)])
-	
-    figurex(6);
+		
+    figurex(4);
         plot(tft{i},hft{i}/1000,'LineWidth',2);
         hold on;grid on;
         set(gca,'XLim',[-20,30])
@@ -168,17 +150,13 @@ for i = 1:6
 end
 
 figurex(1);
-    legend(legendstrings,'Location','North');
+    legend(legendstrings,'Location','NorthWest');
 figurex(2);
     legend(legendstrings,'Location','NorthEast');
 figurex(3);
-    legend(legendstrings,'Location','NorthWest');
+    legend(legendstrings,'Location','SouthWest');
 figurex(4);
-    legend(legendstrings,'Location','SouthEast');
-figurex(5);
-    legend(legendstrings,'Location','SouthEast');
-figurex(6);
-    legend(legendstrings,'Location','NorthEast');
+    legend(legendstrings,'Location','SouthWest');
 
 if saveimg
     for i = 1:length(fname)
