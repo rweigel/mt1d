@@ -123,15 +123,15 @@ figure(1);clf;
     end
 
 figure(2);clf;
-    loglog(1./f,Zmag,'k','LineWidth',3,'Marker','.','MarkerSize',20);
+    loglog(1./f,Zmag*1e-3,'k','LineWidth',3,'Marker','.','MarkerSize',20);
     hold on;
     loglog(1./f,rho_a,'b','LineWidth',3,'Marker','.','MarkerSize',20);
     grid on;
     xlabel('Period [s]');
-    lh = legend(' $|\widetilde{Z}| = |\widetilde{E}_x/\widetilde{B}_y| = \omega|\widetilde{C}|\quad\mbox{[m/s]}$',...
-                ' $\rho_a = \omega\mu_0|\widetilde{C}|^2\quad[\Omega\cdot\mbox{m}]$');
-    set(lh,'Interpreter','Latex','Location','SouthWest');
     set(findall(gcf,'-property','FontSize'),'FontSize',16)
+    lh = legend(' $|\widetilde{Z}| = |\widetilde{E}_x/\widetilde{B}_y| = \omega|\widetilde{C}|\;\left[\frac{\mbox{mV/km}}{\mbox{nT}}\right]$',...
+                ' $\rho_a = \omega\mu_0|\widetilde{C}|^2\quad[\Omega\cdot\mbox{m}]$');
+    set(lh,'Interpreter','Latex','Location','SouthWest','FontSize',14);
     set(gca,'FontName','Times');
     if saveimg
         figurep(base, 1, 'rho_a')

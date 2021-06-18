@@ -106,17 +106,17 @@ figurex(1);clf;
     end
 
 figurex(2);clf;
-    loglog(f,rho_a,'b','LineWidth',3,'Marker','.','MarkerSize',10);
+    loglog(1./f,rho_a,'b','LineWidth',3,'Marker','.','MarkerSize',10);
     hold on;
-    loglog(f,rho_nb,'m','LineWidth',3,'Marker','.','MarkerSize',10);    
-    loglog(f,Zmag*1e-3,'k','LineWidth',3,'Marker','.','MarkerSize',10);
-    loglog(f,Cmag/1e3,'g','LineWidth',3,'Marker','.','MarkerSize',10);
+    loglog(1./f,rho_nb,'m','LineWidth',3,'Marker','.','MarkerSize',10);    
+    loglog(1./f,Zmag*1e-3,'k','LineWidth',3,'Marker','.','MarkerSize',10);
+    loglog(1./f,Cmag/1e3,'g','LineWidth',3,'Marker','.','MarkerSize',10);
     %loglog(f,p,'r','LineWidth',3,'Marker','.','MarkerSize',10);
     th = title(titlestr); 
     set(th,'Interpreter','Latex');    
     grid on;
-    xlabel('$f \mbox{ [Hz]}$','Interpreter','Latex');
-    set(gca,'XLim',[1/N-eps,0.51]);
+    xlabel('$T \mbox{ [s]}$','Interpreter','Latex');
+    set(gca,'XLim',[2-eps,N+eps]);
     
     set(findall(gcf,'-property','FontSize'),'FontSize',16)
     
@@ -137,17 +137,18 @@ figurex(2);clf;
     end
 
 figurex(3);clf;
-    semilogx(f,phi_C,'g','LineWidth',3,'Marker','.','MarkerSize',10);
+    semilogx(1./f,phi_C,'g','LineWidth',3,'Marker','.','MarkerSize',10);
     hold on;
-    semilogx(f,phi_Z,'k','LineWidth',3,'Marker','.','MarkerSize',10);
+    semilogx(1./f,phi_Z,'k','LineWidth',3,'Marker','.','MarkerSize',10);
     grid on;
     set(gca,'YLim',[-90 90]);
     set(gca,'YTick',[-90:15:90]);
     th = title(titlestr);
     set(th,'Interpreter','Latex');  
     ylabel('$\mbox{[degrees]}$','Interpreter','Latex');
-    xlabel('$f \mbox{ [Hz]}$','Interpreter','Latex');
-    set(gca,'XLim',[1/N-eps,0.51]);    
+    xlabel('$T \mbox{ [s]}$','Interpreter','Latex');
+    set(gca,'XLim',[2-eps,N+eps]);
+    
     lh = legend(' $\phi_{\widetilde{C}}\quad$',...
                 ' $\phi_{\widetilde{Z}}$',...
                 'Location','SouthWest',...
