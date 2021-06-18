@@ -94,38 +94,6 @@ phi_C = (180/pi)*atan2(imag(C),real(C));
 phi_Z = (180/pi)*atan2(imag(Z),real(Z));
 
 figure(1);clf;
-    loglog(1./f,Zmag,'k','LineWidth',3,'Marker','.','MarkerSize',20);
-    hold on;
-    loglog(1./f,rho_a,'b','LineWidth',3,'Marker','.','MarkerSize',20);
-    grid on;
-    xlabel('Period [s]');
-    lh = legend(' $|\widetilde{Z}| = |\widetilde{E}_x/\widetilde{B}_y| = \omega|\widetilde{C}|\quad\mbox{[m/s]}$',...
-                ' $\rho_a = \omega\mu_0|\widetilde{C}|^2\quad[\Omega\cdot\mbox{m}]$');
-    set(lh,'Interpreter','Latex');
-    set(findall(gcf,'-property','FontSize'),'FontSize',16)
-    set(gca,'FontName','Times');
-    if saveimg
-        figurep(base, 1, 'rho_a')
-    end
-    
-figure(2);clf;
-    semilogx(1./f,phi_Z,'k','LineWidth',3,'Marker','.','MarkerSize',20);
-    hold on;
-    semilogx(1./f,phi_C,'b','LineWidth',3,'Marker','.','MarkerSize',20);
-    grid on;
-    set(gca,'YLim',[-90 180]);
-    xlabel('Period [s]');
-    lh = legend(' $\phi_{\widetilde{Z}}\quad\mbox{[deg]}$',...
-                ' $\phi_{\widetilde{C}}\quad\mbox{[deg]}$',...
-                'Location','NorthWest');
-    set(lh,'Interpreter','Latex');
-    set(findall(gcf,'-property','FontSize'),'FontSize',16)
-    set(gca,'FontName','Times');
-    if saveimg
-        figurep(base, 1, 'phi_a')
-    end
-
-figure(3);clf;
     d = cumsum(h);
     d = [10^3,d(1:end-1),10^6];
     s(end+1) = s(end);
@@ -146,13 +114,45 @@ figure(3);clf;
     for i = 1:length(xtl)
         xtl{i} = [xtl{i},'_{ }'];
     end
-    xtl
     set(gca,'XTickLabel',xtl);    
 
     set(findall(gcf,'-property','FontSize'),'FontSize',16)
     set(gca,'FontName','Times');
     if saveimg
         figurep(base, 1, 'phi_geometry')
+    end
+
+figure(2);clf;
+    loglog(1./f,Zmag,'k','LineWidth',3,'Marker','.','MarkerSize',20);
+    hold on;
+    loglog(1./f,rho_a,'b','LineWidth',3,'Marker','.','MarkerSize',20);
+    grid on;
+    xlabel('Period [s]');
+    lh = legend(' $|\widetilde{Z}| = |\widetilde{E}_x/\widetilde{B}_y| = \omega|\widetilde{C}|\quad\mbox{[m/s]}$',...
+                ' $\rho_a = \omega\mu_0|\widetilde{C}|^2\quad[\Omega\cdot\mbox{m}]$');
+    set(lh,'Interpreter','Latex','Location','SouthWest');
+    set(findall(gcf,'-property','FontSize'),'FontSize',16)
+    set(gca,'FontName','Times');
+    if saveimg
+        figurep(base, 1, 'rho_a')
+    end
+    
+figure(3);clf;
+    semilogx(1./f,phi_Z,'k','LineWidth',3,'Marker','.','MarkerSize',20);
+    hold on;
+    semilogx(1./f,phi_C,'b','LineWidth',3,'Marker','.','MarkerSize',20);
+    grid on;
+    set(gca,'YLim',[-90 90]);
+    set(gca,'YTick',[-90:15:90]);
+    xlabel('Period [s]');
+    lh = legend(' $\phi_{\widetilde{Z}}\quad\mbox{[deg]}$',...
+                ' $\phi_{\widetilde{C}}\quad\mbox{[deg]}$',...
+                'Location','NorthWest');
+    set(lh,'Interpreter','Latex');
+    set(findall(gcf,'-property','FontSize'),'FontSize',16)
+    set(gca,'FontName','Times');
+    if saveimg
+        figurep(base, 1, 'phi_a')
     end
 
 diary off
