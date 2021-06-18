@@ -2,6 +2,9 @@ clear;
 
 saveimg = false;
 
+addpath([fileparts(mfilename('fullpath')),pathsep(),'m']);
+addpath([fileparts(mfilename('fullpath')),pathsep(),'models']);
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Models to compare
 models     = {'Q1','CO1','BR1'};

@@ -6,8 +6,14 @@
 
 clear;
 
-delete('./zplanewave_test.log')
-diary('./zplanewave_test.log')
+saveimg = true;
+
+% Output files will be named ./figures/base_...
+base = 'zplanewave_test'; 
+
+logfile = [mfilename('fullpath'),'.log'];
+delete(logfile);
+diary(logfile);
 
 mu_0 = 4*pi*1e-7; % Vacuum permeability
 
@@ -45,10 +51,10 @@ h = [0.1*p(1),Inf];
 C = zplanewave(s,h,f);
 
 % Manual calculation of C.
-q(2) = sqrt(j*mu_0*s(2)*2*pi*f);
+q(2) = sqrt(1j*mu_0*s(2)*2*pi*f);
 Ctest(2) = 1/q(2); 
 
-q(1) = sqrt(j*mu_0*s(1)*2*pi*f);
+q(1) = sqrt(1j*mu_0*s(1)*2*pi*f);
 Ctest(1) = (1/q(1)) * ( q(1)*Ctest(2) + tanh(q(1)*h(1)) ) / (1 + q(1)*Ctest(2)*tanh(q(1)*h(1)));
 
 fprintf('Test 2: Two layers\n');
@@ -80,7 +86,7 @@ s = [1/1000,1/10,1/100,1/5]';
 h = 1e3*[10,20,400,Inf];
 
 C    = zplanewave(s,h,f);
-Z    = j*2*pi*f.*C;
+Z    = 1j*2*pi*f.*C;
 Zmag = sqrt(Z.*conj(Z));
 
 rho_a = C.*conj(C)*mu_0*2*pi.*f;
@@ -96,10 +102,11 @@ figure(1);clf;
     lh = legend(' $|\widetilde{Z}| = |\widetilde{E}_x/\widetilde{B}_y| = \omega|\widetilde{C}|\quad\mbox{[m/s]}$',...
                 ' $\rho_a = \omega\mu_0|\widetilde{C}|^2\quad[\Omega\cdot\mbox{m}]$');
     set(lh,'Interpreter','Latex');
-    fname = './figures/zplanewave_test_rho_a';
-    print('-dpng','-r150',[fname,'.png']);
-    print('-depsc',[fname,'.eps']);
-    fprintf('Wrote %s.{png,eps}\n',fname);
+    set(findall(gcf,'-property','FontSize'),'FontSize',16)
+    set(gca,'FontName','Times');
+    if saveimg
+        figurep(base, 1, 'rho_a')
+    end
     
 figure(2);clf;
     semilogx(1./f,phi_Z,'k','LineWidth',3,'Marker','.','MarkerSize',20);
@@ -112,39 +119,40 @@ figure(2);clf;
                 ' $\phi_{\widetilde{C}}\quad\mbox{[deg]}$',...
                 'Location','NorthWest');
     set(lh,'Interpreter','Latex');
-    fname = './figures/zplanewave_test_phi_a';
-    print('-dpng','-r150',[fname,'.png']);
-    print('-depsc',[fname,'.eps']);
-    fprintf('Wrote %s.{png,eps}\n',fname);
+    set(findall(gcf,'-property','FontSize'),'FontSize',16)
+    set(gca,'FontName','Times');
+    if saveimg
+        figurep(base, 1, 'phi_a')
+    end
 
 figure(3);clf;
     d = cumsum(h);
-    d = [10^(round(log10(d(1)))-1),d,10^(round(log10(d(end)))+1)];
+    d = [10^3,d(1:end-1),10^6];
     s(end+1) = s(end);
     for i = 1:length(s)-1
-        loglog([1/s(i),1/s(i)],[d(i),d(i+1)]/1e3,'LineWidth',5);
+        loglog([1/s(i),1/s(i)],[d(i),d(i+1)]/1e3,'k','LineWidth',5);
         hold on;
-        loglog([1/s(i),1/s(i+1)],[d(i+1),d(i+1)]/1e3,'LineWidth',1);
+        loglog([1/s(i),1/s(i+1)],[d(i+1),d(i+1)]/1e3,'k','LineWidth',1);
     end
     grid on;
-    set(gca,'YDir','reverse');
-    set(gca,'XAxisLocation','Top');
     xlabel('Resistivity [\Omega\cdotm]');
     ylabel('Depth [km]');
-    axis([.7 10^4 1 10^4]);
-    fname = './figures/zplanewave_test_geometry';
-    print('-dpng','-r150',[fname,'.png']);
-    print('-depsc',[fname,'.eps']);
-    fprintf('Wrote %s.{png,eps}\n',fname);
+    axis([.9 1.1*10^3 1 10^3]);
 
-    if (0)
-        for i = 1:length(hf)-1
-            loglog([hf(i),hf(i+1)]/1e3,[1/s(i),1/s(i)],'LineWidth',5);
-            %loglog([hf(i),hf(i+1)],'LineWidth',3);
-            hold on;
-        end
-        grid on;
-        xlabel('Depth [km]');
-        ylabel('Resistivity [\Omega\cdotm]');
+    set(gca,'YDir','reverse');
+    % Fix for https://www.mathworks.com/matlabcentral/answers/431242-reversing-y-axis-direction-causes-xticks-to-invert-and-overlap-with-labels
+    set(gca,'XAxisLocation','Top');
+    xtl = get(gca,'XTickLabel');
+    for i = 1:length(xtl)
+        xtl{i} = [xtl{i},'_{ }'];
     end
+    xtl
+    set(gca,'XTickLabel',xtl);    
+
+    set(findall(gcf,'-property','FontSize'),'FontSize',16)
+    set(gca,'FontName','Times');
+    if saveimg
+        figurep(base, 1, 'phi_geometry')
+    end
+
 diary off
