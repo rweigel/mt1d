@@ -12,9 +12,9 @@ fnamebase  = models{1};
 for i = 2:length(models)
     fnamebase = [fnamebase,'_',models{i}];
 end
-fname{1} = sprintf('z_planewave_model_compare_Z_vs_T_%s',fnamebase);
-fname{2} = sprintf('z_planewave_model_compare_phi_vs_T_%s',fnamebase);
-fname{3} = sprintf('z_planewave_model_compare_depth_vs_rho_%s',fnamebase);
+fname{1} = sprintf('z_planewave_model_compare_depth_vs_rho_%s',fnamebase);
+fname{2} = sprintf('z_planewave_model_compare_Z_vs_T_%s',fnamebase);
+fname{3} = sprintf('z_planewave_model_compare_phi_vs_T_%s',fnamebase);
 fname{4} = sprintf('z_planewave_model_compare_irf_%s',fnamebase);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
