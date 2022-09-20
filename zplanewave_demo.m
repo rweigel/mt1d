@@ -18,12 +18,16 @@ N = no*10^ne;
 f = [1:N/2]/N;
 
 Info = modelinfo();
+
 titlestr = '';
 
 for profile = 1:7
 %for profile = 1:1
 
+
 profilestr = sprintf('S%d',profile);
+fprintf('Profile name: %s\n',Info.(profilestr).('longname'))
+
 s = 1./Info.(profilestr).('rho');
 h = Info.(profilestr).('thickness');
 

@@ -6,6 +6,8 @@
 
 clear;
 
+addpath([fileparts(mfilename('fullpath')),pathsep(),'m']);
+
 saveimg = true;
 
 % Output files will be named ./figures/base_...
